@@ -1,5 +1,5 @@
-from cats import Tiger
-from dogs import Dog
+from animals.tiger import Tiger
+from animals.dog import Dog
 
 dog_name = "Bobik"
 dog = Dog(dog_name)
