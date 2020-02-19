@@ -1,7 +1,32 @@
 from abc import ABC
+from functools import wraps
+
 from animals.fly_behavior.fly_behavior import FlyBehavior
 from animals.run_behavior.run_behavior import RunBehavior
 from animals.swim_behavior.swim_behavior import SwimBehavior
+
+
+def check_if_animal_have_enought_energy(behavior_name):
+    def middle(func):
+        @wraps(func)
+        def wrap(self, *args, **kwargs):
+            if not hasattr(self, behavior_name):
+                raise NameError("This type of behavior isn't registered")
+
+            behavior = getattr(self, behavior_name)
+            if hasattr(behavior, 'wasted_energy'):
+                wasted_energy = getattr(behavior, 'wasted_energy')
+                energy_level = self.get_energy()
+                if wasted_energy > energy_level:
+                    print(f"This animal is tired! It doesn't {func.__name__}")
+                    result = None
+                else:
+                    result = func(self, *args, **kwargs)
+            else:
+                result = func(self, *args, **kwargs)
+            return result
+        return wrap
+    return middle
 
 
 class AbstractAnimal(ABC):
@@ -24,6 +49,8 @@ class AbstractAnimal(ABC):
      3. Set a abstract behavior into abstract animal
         (for example: self.fly_behavior = FlyBehavior())
         and set specific into specific animal
+     Extra info: if behavior method waste energy set for method argument:
+        self.wasted_energy - energy, which will be wasted for action
     """
 
     def __init__(self, name, energy=100, **kwargs):
@@ -45,11 +72,14 @@ class AbstractAnimal(ABC):
     def get_energy(self):
         return self.energy
 
+    @check_if_animal_have_enought_energy("fly_behavior")
     def fly(self):
         self.fly_behavior.perform_fly(self)
 
+    @check_if_animal_have_enought_energy("run_behavior")
     def run(self):
         self.run_behavior.perform_run(self)
 
+    @check_if_animal_have_enought_energy("swim_behavior")
     def swim(self):
         self.swim_behavior.perform_swim(self)
