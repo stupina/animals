@@ -1,15 +1,18 @@
 from animals.abstract_animal import AbstractAnimal
+from animals.fly_behavior.can_not_fly_method import(
+    CanNotFlyMethod,
+)
+from . run_behavior.run_wasting_energy_method import(
+    RunWastingEnergyMethod,
+)
+from . swim_behavior.swim_wasting_energy_method import(
+    SwimWastingEnergyMethod,
+)
 
 
 class Dog(AbstractAnimal):
-
-    def run(self):
-        print("My name is "+str(self.name)+" and i running")
-        self.energy = self.energy - 10
-
-    def swim(self):
-        print("My name is "+str(self.name)+" and i swimming")
-        self.energy = self.energy - 30
-
-    def fly(self):
-        print("My name is "+str(self.name)+" and i can't fly")
+    def __init__(self, name, energy=100, **kwargs):
+        super().__init__(name, energy, **kwargs)
+        self.fly_behavior = CanNotFlyMethod()
+        self.run_behavior = RunWastingEnergyMethod(10)
+        self.swim_behavior = SwimWastingEnergyMethod()

@@ -1,17 +1,18 @@
 from animals.abstract_animal import AbstractAnimal
+from animals.fly_behavior.can_not_fly_method import(
+    CanNotFlyMethod,
+)
+from . run_behavior.run_wasting_energy_method import(
+    RunWastingEnergyMethod,
+)
+from . swim_behavior.swim_wasting_energy_method import(
+    SwimWastingEnergyMethod,
+)
 
 
 class Tiger(AbstractAnimal):
     def __init__(self, name, energy=200, **kwargs):
         super().__init__(name, energy, **kwargs)
-
-    def run(self):
-        print("My name is "+str(self.name)+" and i running")
-        self.energy = self.energy - 20
-
-    def swim(self):
-        print("My name is "+str(self.name)+" and i swimming")
-        self.energy = self.energy - 40
-
-    def fly(self):
-        print('My name is '+str(self.name)+" and i can't fly")
+        self.fly_behavior = CanNotFlyMethod()
+        self.run_behavior = RunWastingEnergyMethod(20)
+        self.swim_behavior = SwimWastingEnergyMethod(40)
