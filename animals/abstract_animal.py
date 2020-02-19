@@ -18,7 +18,10 @@ def check_if_animal_have_enought_energy(behavior_name):
                 wasted_energy = getattr(behavior, 'wasted_energy')
                 energy_level = self.get_energy()
                 if wasted_energy > energy_level:
-                    print(f"This animal is tired! It doesn't {func.__name__}")
+                    msg = "This animal is tired! It doesn't {}".format(
+                        func.__name__,
+                    )
+                    print(msg)
                     result = None
                 else:
                     result = func(self, *args, **kwargs)
