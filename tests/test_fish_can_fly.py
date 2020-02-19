@@ -1,4 +1,6 @@
 import unittest
+
+from animals.animal_settings import FISH_CAN_FLY_ENERGY
 from animals.fish_can_fly import FishCanFly
 
 
@@ -9,7 +11,7 @@ class FishTestCase(unittest.TestCase):
 
     def test_start_fish_energy_level(self):
         energy_level = self.fish.get_energy()
-        self.assertEqual(energy_level, 100)
+        self.assertEqual(energy_level, FISH_CAN_FLY_ENERGY)
 
     def test_fish_run(self):
         energy_level = self.fish.get_energy()

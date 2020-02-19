@@ -1,4 +1,6 @@
 import unittest
+
+from animals.animal_settings import DOG_ENERGY
 from animals.dog import Dog
 
 
@@ -9,7 +11,7 @@ class DogTestCase(unittest.TestCase):
 
     def test_start_dog_energy_level(self):
         energy_level = self.dog.get_energy()
-        self.assertEqual(energy_level, 100)
+        self.assertEqual(energy_level, DOG_ENERGY)
 
     def test_dog_run(self):
         energy_level = self.dog.get_energy()

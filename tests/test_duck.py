@@ -1,4 +1,6 @@
 import unittest
+
+from animals.animal_settings import DUCK_ENERGY
 from animals.duck import Duck
 
 
@@ -9,7 +11,7 @@ class DuckTestCase(unittest.TestCase):
 
     def test_start_duck_energy_level(self):
         energy_level = self.duck.get_energy()
-        self.assertEqual(energy_level, 100)
+        self.assertEqual(energy_level, DUCK_ENERGY)
 
     def test_duck_run(self):
         energy_level = self.duck.get_energy()

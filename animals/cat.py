@@ -1,4 +1,5 @@
 from animals.abstract_animal import AbstractAnimal
+from animals.animal_settings import CAT_ENERGY
 from . fly_behavior.can_not_fly_method import(
     CanNotFlyMethod,
 )
@@ -11,7 +12,7 @@ from . swim_behavior.can_not_swim_method import(
 
 
 class Cat(AbstractAnimal):
-    def __init__(self, name, energy=100, **kwargs):
+    def __init__(self, name, energy=CAT_ENERGY, **kwargs):
         super().__init__(name, energy, **kwargs)
         self.fly_behavior = CanNotFlyMethod()
         self.run_behavior = RunWastingEnergyMethod()

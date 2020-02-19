@@ -1,4 +1,6 @@
 import unittest
+
+from animals.animal_settings import CAT_ENERGY
 from animals.cat import Cat
 
 
@@ -9,7 +11,7 @@ class CatTestCase(unittest.TestCase):
 
     def test_start_cat_energy_level(self):
         energy_level = self.cat.get_energy()
-        self.assertEqual(energy_level, 100)
+        self.assertEqual(energy_level, CAT_ENERGY)
 
     def test_cat_run(self):
         energy_level = self.cat.get_energy()

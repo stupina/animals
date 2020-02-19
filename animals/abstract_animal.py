@@ -1,4 +1,5 @@
 from abc import ABC
+from enum import Enum
 from functools import wraps
 
 from animals.fly_behavior.fly_behavior import FlyBehavior
@@ -6,13 +7,16 @@ from animals.run_behavior.run_behavior import RunBehavior
 from animals.swim_behavior.swim_behavior import SwimBehavior
 
 
+class BehaviorType(Enum):
+    fly_behavior = 1
+    run_behavior = 2
+    swim_behavior = 3
+
+
 def check_if_animal_have_enought_energy(behavior_name):
     def middle(func):
         @wraps(func)
         def wrap(self, *args, **kwargs):
-            if not hasattr(self, behavior_name):
-                raise NameError("This type of behavior isn't registered")
-
             behavior = getattr(self, behavior_name)
             if hasattr(behavior, 'wasted_energy'):
                 wasted_energy = getattr(behavior, 'wasted_energy')
@@ -52,6 +56,8 @@ class AbstractAnimal(ABC):
      3. Set a abstract behavior into abstract animal
         (for example: self.fly_behavior = FlyBehavior())
         and set specific into specific animal
+     4. Add new behavior to enum class BehaviorType
+        to use in check_if_animal_have_enought_energy decorator
      Extra info: if behavior method waste energy set for method argument:
         self.wasted_energy - energy, which will be wasted for action
     """
@@ -75,14 +81,14 @@ class AbstractAnimal(ABC):
     def get_energy(self):
         return self.energy
 
-    @check_if_animal_have_enought_energy("fly_behavior")
+    @check_if_animal_have_enought_energy(BehaviorType.fly_behavior.name)
     def fly(self):
         self.fly_behavior.perform_fly(self)
 
-    @check_if_animal_have_enought_energy("run_behavior")
+    @check_if_animal_have_enought_energy(BehaviorType.run_behavior.name)
     def run(self):
         self.run_behavior.perform_run(self)
 
-    @check_if_animal_have_enought_energy("swim_behavior")
+    @check_if_animal_have_enought_energy(BehaviorType.swim_behavior.name)
     def swim(self):
         self.swim_behavior.perform_swim(self)
